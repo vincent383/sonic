@@ -10,3 +10,12 @@ def test_send_missing_file_returns_nonzero(capsys):
 
     assert main(["send", "/does/not/exist"]) != 0
     assert "error" in capsys.readouterr().err.lower()
+
+
+def test_encrypt_and_decrypt_commands_are_available():
+    from sonic_transfer.cli import build_parser
+
+    encrypt = build_parser().parse_args(["encrypt", "input.bin"])
+    decrypt = build_parser().parse_args(["decrypt", "input.senc"])
+    assert encrypt.command == "encrypt"
+    assert decrypt.command == "decrypt"
